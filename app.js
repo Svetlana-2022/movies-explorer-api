@@ -11,6 +11,8 @@ const { auth } = require('./middlewares/auth');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+const INTERNAL_SERVER_ERROR = 500;
+
 const { NODE_ENV } = process.env;
 
 const config = dotenv.config({
@@ -21,7 +23,7 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+mongoose.connect('mongodb://127.0.0.1:27017/moviesdb');
 
 app.set('config', config);
 app.use(cors({
