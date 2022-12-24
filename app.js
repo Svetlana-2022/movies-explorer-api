@@ -19,11 +19,11 @@ const config = dotenv.config({
   path: NODE_ENV === 'production' ? '.env' : '.env.common',
 }).parsed;
 
-const { PORT = 3001 } = process.env;
+const { PORT, BASE_URL } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1:27017/moviesdb');
+mongoose.connect(BASE_URL);
 
 app.set('config', config);
 app.use(cors({
