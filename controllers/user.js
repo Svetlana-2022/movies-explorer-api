@@ -13,14 +13,13 @@ const UniqueErrorCode = 11000;
 
 module.exports.getUserMe = (req, res, next) => {
     const id = req.user._id;
-    const { name, email } = req.body;
     User.findById(id)
       .then((user) => {
         console.log(user, '---getUser');
         if (!user) {
           throw new NotFoundError('Пользователь не найден');
         } else {
-          res.send({ name, email });
+          res.send(user);
         }
       })
       .catch(next);
