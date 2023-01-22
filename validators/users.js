@@ -1,6 +1,6 @@
 const { Joi, Segments, celebrate } = require('celebrate');
 
-const url = /^https?:\/\/[www.]?[a-zA-Z0-9]+[\w\-._~:/?#[\]$&'()*+,;*]{2,}#?$/;
+const url = /.+/;
 
 module.exports.celebrateBodyUser = celebrate({
   [Segments.BODY]: Joi.object().keys({
