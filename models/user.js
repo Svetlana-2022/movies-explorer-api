@@ -38,7 +38,6 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials({ emai
           }
           const user = document.toObject();
           delete user.password;
-          console.log(user);
           return user;
         });
     });

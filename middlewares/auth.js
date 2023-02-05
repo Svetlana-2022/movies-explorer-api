@@ -8,9 +8,7 @@ module.exports.auth = (req, res, next) => {
     next(new Unauthorizet('Необходима авторизация.'));
   } else {
     const token = authorization.replace(/^Bearer*\s*/i, '');
-    console.log(token, '---tok');
     const { JWT_SECRET } = req.app.get('config');
-    console.log(JWT_SECRET, '---secret');
     let payload;
     try {
       payload = jwt.verify(token, JWT_SECRET);

@@ -15,7 +15,6 @@ module.exports.getUserMe = (req, res, next) => {
     const id = req.user._id;
     User.findById(id)
       .then((user) => {
-        console.log(user, '---getUser');
         if (!user) {
           throw new NotFoundError('Пользователь не найден');
         } else {
@@ -27,7 +26,6 @@ module.exports.getUserMe = (req, res, next) => {
 
 module.exports.updateUserMe = (req, res, next) => {
     const { name, email } = req.body;
-    console.log(req.user);
     User.findByIdAndUpdate(req.user._id, { name, email }, {
       new: true,
       runValidators: true,
@@ -51,7 +49,6 @@ module.exports.updateUserMe = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  console.log(req.body, '---createUser');
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
       name: req.body.name,
@@ -65,7 +62,6 @@ module.exports.createUser = (req, res, next) => {
       console.log(user, '---doc');
     })
     .catch((err) => {
-      console.log(err, '---createErr');
       if (err instanceof HTTPError) {
         next(err);
       } else if (err.code === UniqueErrorCode) {
@@ -82,11 +78,9 @@ module.exports.login = (req, res, next) => {
   const { name, email, password } = req.body;
   return User.findUserByCredentials({ name, email, password })
     .then((user) => {
-      console.log(user, '--logUs');
       const { JWT_SECRET } = req.app.get('config');
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
       res.send({ token });
-      console.log({ token }, '---logToken');
     })
     .catch((err) => {
       if (err instanceof HTTPError) {
